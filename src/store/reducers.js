@@ -3,7 +3,8 @@ import {
   SET_IS_ERROR,
   SET_IS_MODAL_OPEN,
   SET_MODAL_TYPE,
-  SET_MODAL_DATA
+  SET_MODAL_DATA,
+  SET_USER_DATA
 } from "./types";
 
 const initialState = {
@@ -11,7 +12,11 @@ const initialState = {
   isLoading: false,
   isModalOpen: false,
   modalData: null,
-  modalType: ""
+  modalType: "",
+  userData: {
+    user: null,
+    roasters: []
+  }
 };
 
 export const globalReducer = (state = initialState, action) => {
@@ -46,6 +51,14 @@ export const globalReducer = (state = initialState, action) => {
         ...state,
         ...{ modalData: action.payload }
       };
+    }
+    
+    case SET_USER_DATA: {
+      console.log(action)
+      return {
+        ...state,
+        ...{ userData: action.payload}
+      }
     }
     
     default:

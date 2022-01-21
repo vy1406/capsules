@@ -3,7 +3,9 @@ import {
   SET_IS_LOADING,
   SET_IS_MODAL_OPEN,
   SET_MODAL_DATA,
-  SET_MODAL_TYPE
+  SET_MODAL_TYPE,
+  SET_USER_DATA,
+  GET_USER_DATA
 } from "./types";
 
 export const setIsError = (isError) => ({ 
@@ -30,3 +32,10 @@ export const setModalData = (modalData) => ({
   type: SET_MODAL_DATA,
   payload: modalData
 })
+
+export const setUserData = (userData) => ({
+  type: SET_USER_DATA,
+  payload: userData
+})
+
+export const getUserData = () => ({type: GET_USER_DATA})

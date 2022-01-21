@@ -3,19 +3,21 @@ import './style.scss'
 import EditUser from './edit-user/EditUser';
 import AddUser from './add-user/AddUser';
 import { connect } from "react-redux";
-import CustomSwitch from '../../common/switch/CustomSwitch';
 import { MODAL_TYPES } from '../modals/constants';
 import { setModalData, setModalType, toggleModal  } from '../../store/actions';
+import CustomRadioButton from '../../common/radio/CustomRadio';
+import { ADMIN_RADIO_BUTTONS, RADIO_BUTTONS } from '../../utils/constants';
+import NewTeam from './new-team/NewTeam';
 
 const AdminPage = ( {
   toggleModal,
   setModalData,
   setModalType
 }) => {
-    const [checked, setChecked] = useState(true);
+    const [radioButtonValue, setRadioButtonValue] = useState(RADIO_BUTTONS.EDIT_USER);
 
-    const handleOnClick = (checked) => {
-        setChecked(checked);
+    const handleOnClick = (radioButtonValue) => {
+        setRadioButtonValue(radioButtonValue);
     };
 
     const onDeleteUser = (userId) => {
@@ -28,19 +30,25 @@ const AdminPage = ( {
       console.log(userId) 
     }
 
+    const renderContent = () => {
+      switch(radioButtonValue) {
+        case RADIO_BUTTONS.EDIT_USER:
+          return <EditUser onDeleteUser={onDeleteUser} />
+        case RADIO_BUTTONS.NEW_USER:
+          return <AddUser/>
+        case RADIO_BUTTONS.NEW_TEAM:
+          return <NewTeam />
+      }
+    }
+
     return (
         <div className="userCapsulesWrap">
-            <CustomSwitch
-              leftLabel="Edit User"
-              rightLabel="New User"
-              handleOnSwitch={handleOnClick}
+            <CustomRadioButton
+                defaultValue={RADIO_BUTTONS.EDIT_USER}
+                radioButtons={ADMIN_RADIO_BUTTONS}
+                handleOnRadioButton={handleOnClick}
             />
-            {checked ?
-              <AddUser />
-              :
-              <EditUser 
-                onDeleteUser={onDeleteUser}
-            />}
+            {renderContent()}
         </div>
     );
 }

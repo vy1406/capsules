@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from '@mui/material';
+import { Box } from '@mui/material';
 import { getLastSunday, addDaysToDate, subDaysFromDate } from '../../utils/utils';
 import DateUI from '../../common/date/DateUI'
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import './style.scss'
 
 
-export default function DayNavigation() {
+export default function DayNavigation({
+    setStartEndDate,
+}) {
 
     const [startDate, setStartDate] = useState(null)
     const [endDate, setEndDate] = useState(null)
@@ -17,34 +21,35 @@ export default function DayNavigation() {
     }, []) 
 
     const onNextDate = () => {
-        setStartDate(addDaysToDate(startDate))
-        setEndDate(addDaysToDate(endDate))
+        const newStartDate = addDaysToDate(startDate)
+        const newEndDate = addDaysToDate(endDate)
+        setStartDate(newStartDate)
+        setEndDate(newEndDate)
+        setStartEndDate(newStartDate, newEndDate)
     }
 
     const onPrevDate = () => {
-        setStartDate(subDaysFromDate(startDate))
-        setEndDate(subDaysFromDate(endDate))
+        const newStartDate = subDaysFromDate(startDate)
+        const newEndDate = subDaysFromDate(endDate)
+        setStartDate(newStartDate)
+        setEndDate(newEndDate)
+        setStartEndDate(newStartDate, newEndDate)
     }
 
     return (
         <>
-        <div className="datesWrap">            
-            {startDate && <DateUI date={startDate}/>}
-            {endDate && <DateUI date={subDaysFromDate(endDate,1)}/>}
+        {startDate && endDate &&
+         <div className="datesWrap">        
+            <Box className="dateIconWrap" onClick={onPrevDate}>
+                <ArrowBackIosIcon color="primary" />
+                <DateUI date={startDate}/>
+            </Box>
+            <Box className="dateIconWrap" onClick={onNextDate}>
+                <DateUI date={subDaysFromDate(endDate,1)}/>
+                <ArrowForwardIosIcon color="primary"/>
+            </Box>
         </div>
-        <div className="dayNavigationWrap">
-            <Button
-                variant="contained"
-                onClick={onPrevDate}>
-                Previous Week
-            </Button>
-
-            <Button
-                variant="contained"
-                onClick={onNextDate}>
-                Next Week
-            </Button>
-        </div>
+        }      
         </>
     );
 }

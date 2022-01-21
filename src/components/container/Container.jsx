@@ -1,16 +1,17 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import { useTheme } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
+import { connect } from "react-redux";
 import Box from '@mui/material/Box';
 import Header from '../header/Header';
 import UserCapsules from '../user-capsules/UserCapsules';
 import TeamCapsules from '../team-capsules/TeamCapsules';
 import AdminPage from '../admin-page/AdminPage';
+import {getUserData} from '../../store/actions';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -45,7 +46,16 @@ function a11yProps(index) {
   };
 }
 
-export default function Container() {
+const Container = ( {
+  getUserData,
+  userData
+}) => {
+
+  useEffect(() => {
+    getUserData()
+  }, [])
+
+
   const theme = useTheme();
   const [value, setValue] = React.useState(2);
 
@@ -95,3 +105,20 @@ export default function Container() {
     
   );
 }
+
+
+const mapDispatchToProps = {
+  getUserData,
+};
+
+const mapStateToProps = state => ({
+  userData: state.globalReducer.userData,
+  // modalType: state.globalReducer.modalType,
+  // isModalOpen: state.globalReducer.isModalOpen,
+  // modalData: state.globalReducer.modalData
+});
+
+export default connect(
+mapStateToProps,
+mapDispatchToProps
+)(Container);

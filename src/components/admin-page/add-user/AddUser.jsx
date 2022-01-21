@@ -5,7 +5,8 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { TextField, Button } from '@mui/material';
+import { TextField, Button, Typography } from '@mui/material';
+import Checkbox from '@mui/material/Checkbox';
 import {initStartDates } from '../../../utils/utils';
 
 const START_DATES = initStartDates(7)
@@ -14,10 +15,11 @@ export default function AddUser() {
     const [team, setTeam] = React.useState("");
     const [username, setUsername] = useState("")
     const [capsula, setCapsula] = useState("")
+    const [isTeamLeader, setIsTeamLeader] = useState(false)
     const [selectedSunday, setSelectedSunday] = useState("")
 
     const handleOnAddUser = () => {
-        console.log(username, team, capsula, START_DATES[selectedSunday])
+        console.log(username, isTeamLeader, team, capsula, START_DATES[selectedSunday])
     }
 
     const handleChange = (event) => {
@@ -37,16 +39,17 @@ export default function AddUser() {
     const CAPSULAS = [{ name: '2,3,5', id: 0}, { name: '1,4', id: 1}]
 
     return (
-        <div className="userCapsulesWrap">
-            
-                <TextField
-                    id="standard-search"
-                    label="Username"
-                    type="search"
-                    variant="standard"
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-                <Box sx={{ marginTop: "20px", width: "300px" }}>
+        <div className="addUserWrap">
+                <Box className="boxClassName">
+                    <TextField
+                        id="standard-search"
+                        label="Username"
+                        type="search"
+                        variant="standard"
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
+                </Box>
+                <Box className="boxClassName">
                     <FormControl fullWidth>
                         <InputLabel id="team-simple-select-label">Teams</InputLabel>
                         <Select
@@ -62,7 +65,7 @@ export default function AddUser() {
                     </Select>
                     </FormControl>
                 </Box>
-                <Box sx={{ marginTop: "20px", width: "300px" }}>
+                <Box className="boxClassName">
                     <FormControl fullWidth>
                         <InputLabel id="capsules-simple-select-label">Capsules</InputLabel>
                         <Select
@@ -78,7 +81,7 @@ export default function AddUser() {
                         </Select>
                     </FormControl>
                 </Box>
-                <Box sx={{ marginTop: "20px", width: "300px" }}>
+                <Box className="boxClassName">
                     <FormControl fullWidth>
                         <InputLabel id="sunday-simple-select-label">Start Capsula</InputLabel>
                         <Select
@@ -94,11 +97,18 @@ export default function AddUser() {
                         </Select>
                     </FormControl>
                 </Box>
-                <Button
-                    variant="contained"
-                    onClick={handleOnAddUser}>
-                    Add User
-                </Button>
+                <Box className="boxClassName">
+                    <Typography>Is Team Leader</Typography>
+                    <Checkbox checked={isTeamLeader} onChange={(e) => setIsTeamLeader(e.target.checked)}/>
+                </Box>
+                <Box className="boxClassName">
+                    <Button
+                        variant="contained"
+                        onClick={handleOnAddUser}>
+                        Add User
+                    </Button>
+                </Box>
+               
         </div>
     );
 }

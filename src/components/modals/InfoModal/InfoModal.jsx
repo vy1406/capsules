@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
-import Typography from '@mui/material/Typography';
+import { DialogTitle, DialogContent } from '@mui/material';
 import './style.scss'
 
 const InfoModal = ({
@@ -8,14 +8,14 @@ const InfoModal = ({
 }) => {
 
     return (
-       <div>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
+        <Fragment>
+            <DialogTitle id="alert-dialog-title">
                 {modalData.title}
-            </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            </DialogTitle>
+            <DialogContent>
                 {modalData.text}
-            </Typography>
-       </div>
+            </DialogContent>
+        </Fragment>
     );
 }
 

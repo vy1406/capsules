@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 import { TextField, Button } from '@mui/material';
 import './style.scss'
 
-export default function Login() {
+export default function Login( {
+    onLogin
+}) {
 
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
 
     const handleLogin = () => {
-        console.log("username: ", username)
-        console.log("password: ", password)
+        onLogin(username, password)
     }
 
     return (

@@ -1,18 +1,22 @@
 import React from 'react';
 import Avatar from '@mui/material/Avatar';
 import { connect } from "react-redux";
-import { toggleModal, setModalType } from '../../store/actions';
+import { toggleModal, setModalType, setModalData } from '../../store/actions';
 import { MODAL_TYPES } from '../modals/constants';
 import DateUI from '../../common/date/DateUI';
 import './style.scss'
 
 const Header = ({
     toggleModal,
+    setModalData,
     setModalType
 }) => {
     
     const handleOnClick = () => {
         setModalType(MODAL_TYPES.USER_MODAL)
+        setModalData({
+            title: "Change color",
+        })
         toggleModal(true)
     }
 
@@ -31,6 +35,7 @@ const Header = ({
 
 const mapDispatchToProps = {
     toggleModal,
+    setModalData,
     setModalType
 };
 

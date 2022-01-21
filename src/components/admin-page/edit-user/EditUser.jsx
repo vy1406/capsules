@@ -39,9 +39,8 @@ export default function EditUser({ onDeleteUser }) {
     const CAPSULAS = [{ name: '2,3,5', id: 0}, { name: '1,4', id: 1}]
 
     return (
-        <div className="userCapsulesWrap">
-                        
-                <Box sx={{ marginTop: "20px", width: "300px" }}>
+        <div className="editUserWrap">              
+                <Box className="boxClassName">
                     <FormControl fullWidth>
                         <InputLabel id="user-simple-select-label">Users</InputLabel>
                         <Select
@@ -57,7 +56,7 @@ export default function EditUser({ onDeleteUser }) {
                     </Select>
                     </FormControl>
                 </Box>
-                <Box sx={{ marginTop: "20px", width: "300px" }}>
+                <Box className="boxClassName">
                     <FormControl fullWidth>
                         <InputLabel id="capsules-simple-select-label">Capsules</InputLabel>
                         <Select
@@ -73,7 +72,7 @@ export default function EditUser({ onDeleteUser }) {
                         </Select>
                     </FormControl>
                 </Box>
-                <Box sx={{ marginTop: "20px", width: "300px" }}>
+                <Box className="boxClassName">
                     <FormControl fullWidth>
                         <InputLabel id="sunday-simple-select-label">Start Capsula</InputLabel>
                         <Select
@@ -89,17 +88,20 @@ export default function EditUser({ onDeleteUser }) {
                         </Select>
                     </FormControl>
                 </Box>
-                <Button
-                    variant="contained"
-                    onClick={handleOnEditUser}>
-                    Edit User
-                </Button>
-                <Button
-                    variant="contained"
-                    color="error"
-                    onClick={handleOnDeleteUser}>
-                    Delete User
-                </Button>
+                <Box className="boxClassName">
+                    <Button
+                        variant="contained"
+                        onClick={handleOnEditUser}>
+                        Edit User
+                    </Button>
+                    <Button
+                        variant="contained"
+                        color="error"
+                        onClick={handleOnDeleteUser}>
+                        Delete User
+                    </Button>
+                </Box>
+                
         </div>
     );
 }
