@@ -15,7 +15,8 @@ export const getLastSunday = (current) => {
 }
 
 export const formatDate = (date) => {
-  return date.getDate()  + "/" + (date.getMonth()+1) + "/" + date.getFullYear()
+  const toDate = new Date(date)
+  return toDate.getDate()  + "/" + (toDate.getMonth()+1) + "/" + toDate.getFullYear()
 }
 
 // default is week ( 7 days )
@@ -52,12 +53,14 @@ export const isEmpty = (array) => {
 }
 
 export const isSameDate = (date1, date2) => {
+  const toDate1 = new Date(date1)
+  const toDate2 = new Date(date2)
     if ( 
-      date1.getFullYear() === date2.getFullYear()
+      toDate1.getFullYear() === date2.getFullYear()
       &&
-      date1.getMonth() === date2.getMonth()
+      toDate1.getMonth() === date2.getMonth()
       &&
-      date1.getDate() === date2.getDate()
+      toDate1.getDate() === date2.getDate()
     ) return true
     return false
 }

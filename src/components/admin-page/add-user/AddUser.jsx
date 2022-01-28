@@ -11,7 +11,7 @@ import {initStartDates } from '../../../utils/utils';
 
 const START_DATES = initStartDates(7)
 
-export default function AddUser() {
+export default function AddUser({ onAddUser, teams }) {
     const [team, setTeam] = React.useState("");
     const [username, setUsername] = useState("")
     const [capsula, setCapsula] = useState("")
@@ -19,7 +19,7 @@ export default function AddUser() {
     const [selectedSunday, setSelectedSunday] = useState("")
 
     const handleOnAddUser = () => {
-        console.log(username, isTeamLeader, team, capsula, START_DATES[selectedSunday])
+        onAddUser({username, isTeamLeader, team, capsula, startDate: START_DATES[selectedSunday]})
     }
 
     const handleChange = (event) => {
@@ -33,9 +33,7 @@ export default function AddUser() {
     const handleOnSelectSunday = (event) => {
         setSelectedSunday(event.target.value)
     }
-    
-    const TEAMS = [{ name: 'DailyStars', id: 0}, { name: 'led Zeplin', id: 1}]
-    
+        
     const CAPSULAS = [{ name: '2,3,5', id: 0}, { name: '1,4', id: 1}]
 
     return (
@@ -59,8 +57,8 @@ export default function AddUser() {
                             label="Team"
                             onChange={handleChange}
                         >
-                        {TEAMS.map(team => (
-                            <MenuItem key={team.id} value={team.id}>{team.name}</MenuItem>
+                        {teams.map(team => (
+                            <MenuItem key={team._id} value={team._id}>{team.name}</MenuItem>
                         ))}
                     </Select>
                     </FormControl>

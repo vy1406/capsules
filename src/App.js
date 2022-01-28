@@ -1,22 +1,30 @@
-import React, { useState } from 'react';
-
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import Login from './components/login/Login';
 import Container from './components/container/Container';
 import ModalContainer from './components/modals/ModalContainer/ModalContainer';
 
-export default function App() {
-  export default function App() {
-  const [isLogged, setIsLogged] = useState(false)
-
-  const handleOnLogin = ( username, password) => {
-    console.log(username, password)
-    setIsLogged(true)
-  }
+const App = ({loggedUser}) => {
 
   return (
     <div>
-      {isLogged ? <Container /> : <Login onLogin={handleOnLogin}/>}
+      {console.log(loggedUser)}
+      {loggedUser ? <Container /> : <Login />}
       <ModalContainer />
     </div>
   );
 }
+
+const mapDispatchToProps = {
+    // login,
+  };
+  
+const mapStateToProps = state => ({
+  loggedUser: state.globalReducer.loggedUser,
+
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

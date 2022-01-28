@@ -2,11 +2,11 @@ import React, {useState} from 'react';
 import './style.scss'
 import { TextField, Button, Box } from '@mui/material';
 
-export default function NewTeam() {
+export default function NewTeam({onAddTeam}) {
     const [teamName, setTeamName] = useState("")
 
     const handleOnNewTeam = () => {
-        console.log(teamName)
+        onAddTeam({ name: teamName })
     }
 
     return (

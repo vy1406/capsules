@@ -7,11 +7,10 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { Button } from '@mui/material';
 import { initStartDates } from '../../../utils/utils';
-import { DUMMY_USERS } from '../../../utils/constants';
 
 const START_DATES = initStartDates(7)
 
-export default function EditUser({ onDeleteUser }) {
+export default function EditUser({ onDeleteUser, users }) {
     const [user, setUser] = useState("");
     const [capsula, setCapsula] = useState("")
     const [selectedSunday, setSelectedSunday] = useState("")
@@ -50,8 +49,8 @@ export default function EditUser({ onDeleteUser }) {
                             label="User"
                             onChange={handleChange}
                         >
-                        {DUMMY_USERS.map(user => (
-                            <MenuItem key={user.id} value={user.id}>{user.username}</MenuItem>
+                        {users.map(user => (
+                            <MenuItem key={user._id} value={user._id}>{user.username}</MenuItem>
                         ))}
                     </Select>
                     </FormControl>

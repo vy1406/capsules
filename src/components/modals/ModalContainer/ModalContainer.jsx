@@ -18,10 +18,18 @@ const ModalContainer = ({
     modalType
 }) => {
 
+    const handleOnConfirm = () => {
+      toggleModal(false)
+      setModalType("")
+      setModalData(null)
+      modalData.onConfirmCallback && modalData.onConfirmCallback()
+    }
+    
     const handleClose = () => {
         toggleModal(false)
         setModalType("")
         setModalData(null)
+        modalData.onCancelCallback && modalData.onCancelCallback()
     }
 
     const openModalByType = () => {
@@ -48,7 +56,7 @@ const ModalContainer = ({
             {openModalByType()}
             <DialogActions>
               <Button onClick={handleClose}>Cancel</Button>
-              <Button onClick={handleClose} autoFocus>
+              <Button onClick={handleOnConfirm} autoFocus>
                 Ok
               </Button>
             </DialogActions>

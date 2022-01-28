@@ -1,24 +1,67 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './style.scss'
 import EditUser from './edit-user/EditUser';
 import AddUser from './add-user/AddUser';
 import { connect } from "react-redux";
 import { MODAL_TYPES } from '../modals/constants';
-import { setModalData, setModalType, toggleModal  } from '../../store/actions';
 import CustomRadioButton from '../../common/radio/CustomRadio';
 import { ADMIN_RADIO_BUTTONS, RADIO_BUTTONS } from '../../utils/constants';
 import NewTeam from './new-team/NewTeam';
+import {
+  setModalData,
+  setModalType,
+  toggleModal,
+  addNewUser,
+  getTeams,
+  addNewTeam,
+  getUsers
+} from '../../store/actions';
 
 const AdminPage = ( {
   toggleModal,
   setModalData,
-  setModalType
+  addNewUser,
+  addNewTeam,
+  getTeams,
+  getUsers,
+  setModalType,
+  teams,
+  users,
 }) => {
     const [radioButtonValue, setRadioButtonValue] = useState(RADIO_BUTTONS.EDIT_USER);
 
+    useEffect(() => {
+      getTeams()
+      getUsers()
+    }, [])
+
+    useEffect(() => {
+      console.log(users)
+      console.log(teams)
+    }, [])
     const handleOnClick = (radioButtonValue) => {
         setRadioButtonValue(radioButtonValue);
     };
+
+    const onAddTeam = (team) => {
+      setModalType(MODAL_TYPES.INFO_MODAL)
+      toggleModal(true)
+      setModalData({
+        title: "Double check...",
+        text: "Sure about the team name ? ",
+        onConfirmCallback: () => addNewTeam(team),
+      })
+    }
+    
+    const onAddUser = (user) => {
+      setModalType(MODAL_TYPES.INFO_MODAL)
+      toggleModal(true)
+      setModalData({
+        title: "Double check...",
+        text: "You sure ?",
+        onConfirmCallback: () => addNewUser(user),
+      })
+    }
 
     const onDeleteUser = (userId) => {
       setModalType(MODAL_TYPES.INFO_MODAL)
@@ -33,11 +76,11 @@ const AdminPage = ( {
     const renderContent = () => {
       switch(radioButtonValue) {
         case RADIO_BUTTONS.EDIT_USER:
-          return <EditUser onDeleteUser={onDeleteUser} />
+          return <EditUser onDeleteUser={onDeleteUser} users={users}/>
         case RADIO_BUTTONS.NEW_USER:
-          return <AddUser/>
+          return <AddUser onAddUser={onAddUser} teams={teams}/>
         case RADIO_BUTTONS.NEW_TEAM:
-          return <NewTeam />
+          return <NewTeam onAddTeam={onAddTeam}/>
       }
     }
 
@@ -58,10 +101,15 @@ const mapDispatchToProps = {
   toggleModal,
   setModalData,
   setModalType,
+  addNewUser,
+  addNewTeam,
+  getTeams,
+  getUsers,
 };
 
 const mapStateToProps = state => ({
-
+  teams: state.globalReducer.teams,
+  users: state.globalReducer.users,
 });
 
 export default connect(

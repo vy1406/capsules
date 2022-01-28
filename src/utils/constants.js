@@ -39,11 +39,12 @@ export const DUMMY_USERS = [
         teamName: 'Dairy Stars'},
     {  id: 66,
         username: 'moshe',
-        teamId: 1,2
+        teamId: 1,
         color: getRandomColor(),
         isTeamLeader: false,
         teamName: 'Dairy Stars'}
 ]
+
 
 const now = new Date("01-15-2022")
 export const ROASTERS = [
@@ -77,3 +78,26 @@ export const ADMIN_RADIO_BUTTONS = [
     {value: RADIO_BUTTONS.NEW_USER, label: "New User"},
     {value: RADIO_BUTTONS.NEW_TEAM, label: "New Team"}
 ]
+
+export const apiUrl =  'http://localhost:3000/';
+
+export const CRUD = {
+    CREATE: 'create',
+    DELETE: 'delete',
+    UPDATE: 'update',
+    READ: 'read'
+}
+
+export const ROUTES = {
+    HOME: apiUrl,
+    TEAM: 'team',
+    USER: 'user',
+    ROASTER: 'roaster',
+}
+
+export const METHODS = {
+    GET: 'GET',
+    POST: 'POST',
+    DELETE: 'DELETE',
+    PUT: 'PUT'
+}
