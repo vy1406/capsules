@@ -1,5 +1,5 @@
-import { put, call, takeEvery } from 'redux-saga/effects';
-import { setUserData, setUsers, setTeams } from "./actions";
+import { put, call, takeEvery, select } from 'redux-saga/effects';
+import { setUserData, setUsers, setTeams, setUserRoasters } from "./actions";
 import { setIsLoading, setIsError, setLoggedUser } from './actions';
 import { DUMMY_USER_DATA } from '../utils/constants';
 import { setLocalStorageItem } from '../services/localStorage';
@@ -7,9 +7,10 @@ import {
   postLogin,
   getTeams,
   getUsers,
-  getUserData,
+  getUserRoasters,
   postUser,
-  postTeam
+  postTeam,
+  postRoasters
 } from '../services/apiService';
 import {
   GET_USER_DATA,
@@ -17,10 +18,14 @@ import {
   ADD_NEW_USER,
   ADD_NEW_TEAM,
   GET_USERS,
-  GET_TEAMS
+  GET_TEAMS,
+  ADD_DATES,
+  SET_USER_DATA
 } from "./types";
 
 const countriesEndpoint = 'https://restcountries.com/v3.1/all'
+
+export const getUser = (state) => state.globalReducer.userData.user
 
 function* authenticateUser(action) {
   yield put(setIsLoading(true))
@@ -67,14 +72,9 @@ function* addUser(action) {
 function* fetchUserData() {
   yield put(setIsLoading(true))
   try {
-    const isDev = false;
-    let userData;
-    if ( isDev ) {
-        userData = DUMMY_USER_DATA        
-    } else {
-        userData = yield call(getUserData);
-    }
-    yield put(setUserData(userData))
+    const roasters = yield call(getUserRoasters);
+    console.log(roasters)
+    yield put(setUserRoasters(roasters))
   }
   catch {
     yield put(setIsError(true))
@@ -85,7 +85,6 @@ function* fetchUserData() {
 }
 
 function* fetchTeams() {
-  console.log('LOADING!')
   yield put(setIsLoading(true))
   try {
     const teams = yield call(getTeams);
@@ -94,6 +93,19 @@ function* fetchTeams() {
   }
   catch (e){
     console.log(e)
+    yield put(setIsError(true))
+  }
+  finally {
+    yield put(setIsLoading(false))
+  }
+}
+
+function* addDates(action) {
+  try {
+    const isOk = yield call(postRoasters, action.payload);
+    console.log("isOk" , isOk)
+  }
+  catch (e){
     yield put(setIsError(true))
   }
   finally {
@@ -124,6 +136,7 @@ function* userSaga() {
   yield takeEvery(ADD_NEW_TEAM, addTeam);
   yield takeEvery(GET_TEAMS, fetchTeams);
   yield takeEvery(GET_USERS, fetchUsers);
+  yield takeEvery(ADD_DATES, addDates);
   
   
   

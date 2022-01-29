@@ -11,6 +11,7 @@ import Header from '../header/Header';
 import UserCapsules from '../user-capsules/UserCapsules';
 import TeamCapsules from '../team-capsules/TeamCapsules';
 import AdminPage from '../admin-page/AdminPage';
+import CalendarPage from '../calendar-page/CalendarPage'
 import {getUserData} from '../../store/actions';
 
 function TabPanel(props) {
@@ -48,7 +49,7 @@ function a11yProps(index) {
 
 const Container = ( {
   getUserData,
-  userData
+  loggedUser
 }) => {
 
   useEffect(() => {
@@ -73,16 +74,17 @@ const Container = ( {
           <Box sx={{ bgcolor: 'background.paper', width: "100%" }}>
             <AppBar position="static">
                 <Tabs
-                value={value}
-                onChange={handleChange}
-                indicatorColor="secondary"
-                textColor="inherit"
-                variant="fullWidth"
-                aria-label="full width tabs example"
+                  value={value}
+                  onChange={handleChange}
+                  indicatorColor="secondary"
+                  textColor="inherit"
+                  variant="fullWidth"
+                  aria-label="full width tabs example"
                 >
                 <Tab label="My Week" {...a11yProps(0)} />
                 <Tab label="Team Week" {...a11yProps(1)} />
-                <Tab label="Admin" {...a11yProps(2)} />
+                <Tab label="Calendar" {...a11yProps(2)} />
+                <Tab label="Admin" {...a11yProps(3)} />
                 </Tabs>
             </AppBar>
             <SwipeableViews
@@ -97,6 +99,9 @@ const Container = ( {
                   <TeamCapsules />
                 </TabPanel>
                 <TabPanel value={value} index={2} dir={theme.direction}>
+                  <CalendarPage />
+                </TabPanel>
+                <TabPanel value={value} index={3} dir={theme.direction}>
                   <AdminPage />
                 </TabPanel>
             </SwipeableViews>
@@ -112,7 +117,7 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = state => ({
-  userData: state.globalReducer.userData,
+  loggedUser: state.globalReducer.loggedUser,
   // modalType: state.globalReducer.modalType,
   // isModalOpen: state.globalReducer.isModalOpen,
   // modalData: state.globalReducer.modalData

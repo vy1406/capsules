@@ -13,7 +13,10 @@ import {
   SET_LOGGED_USER,
   ADD_NEW_USER,
   ADD_NEW_TEAM,
-  AUTHENTICATE
+  GET_USER_ROASTERS,
+  AUTHENTICATE,
+  SET_USER_ROASTERS,
+  ADD_DATES
 } from "./types";
 
 export const setLoggedUser = (user) => ({
@@ -61,6 +64,12 @@ export const setModalData = (modalData) => ({
   payload: modalData
 })
 
+export const setUserRoasters = (roasters) => ({
+  type: SET_USER_ROASTERS,
+  payload: roasters
+})
+
+// todo: no need
 export const setUserData = (userData) => ({
   type: SET_USER_DATA,
   payload: userData
@@ -75,6 +84,13 @@ export const setTeams = (teams) => ({
   type: SET_TEAMS,
   payload: teams
 })
+
+export const addDates = (dates) => ({
+  type: ADD_DATES,
+  payload: dates
+})
+
+
 
 export const getTeams = () => ({ type: GET_TEAMS })
 

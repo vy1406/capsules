@@ -42,6 +42,14 @@ export function getUserData() {
         .catch((error) => { throw error })
 }
 
+export function getUserRoasters() {
+    const url = createRoute('ROASTER', 'READ')
+    const requestOptions = createOptions(METHODS.GET)
+    return fetch(url, requestOptions)
+        .then(res => res.json())
+        .catch((error) => { throw error })
+}
+
 export function getUsers() {
     const url = createRoute('USER', 'READ')
     const requestOptions = createOptions(METHODS.GET)
@@ -49,7 +57,6 @@ export function getUsers() {
         .then(res => res.json())
         .catch((error) => { throw error })
 }
-
 
 export function getTeams() {
     const url = createRoute('TEAM', 'READ')
@@ -73,6 +80,14 @@ export function postTeam(team) {
     const url = createRoute('TEAM', 'CREATE')
     const requestOptions = createOptions(METHODS.POST, team)
 
+    return fetch(url, requestOptions)
+        .then(res => res.json())
+        .catch((error) => { throw error })
+}
+
+export function postRoasters(dates) {
+    const url = createRoute('ROASTER', 'UPDATE_OR_REMOVE')
+    const requestOptions = createOptions(METHODS.POST, dates)
     return fetch(url, requestOptions)
         .then(res => res.json())
         .catch((error) => { throw error })

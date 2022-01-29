@@ -85,7 +85,9 @@ export const CRUD = {
     CREATE: 'create',
     DELETE: 'delete',
     UPDATE: 'update',
-    READ: 'read'
+    READ: 'read',
+    ALL: 'all',
+    UPDATE_OR_REMOVE: 'updateOrRemove',
 }
 
 export const ROUTES = {

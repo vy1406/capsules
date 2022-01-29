@@ -35,10 +35,6 @@ const AdminPage = ( {
       getUsers()
     }, [])
 
-    useEffect(() => {
-      console.log(users)
-      console.log(teams)
-    }, [])
     const handleOnClick = (radioButtonValue) => {
         setRadioButtonValue(radioButtonValue);
     };
@@ -70,7 +66,6 @@ const AdminPage = ( {
         title: "Attention!",
         text: "The use will be initialized..."
       })
-      console.log(userId) 
     }
 
     const renderContent = () => {

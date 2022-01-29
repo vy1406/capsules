@@ -56,15 +56,28 @@ export const isSameDate = (date1, date2) => {
   const toDate1 = new Date(date1)
   const toDate2 = new Date(date2)
     if ( 
-      toDate1.getFullYear() === date2.getFullYear()
+      toDate1.getFullYear() === toDate2.getFullYear()
       &&
-      toDate1.getMonth() === date2.getMonth()
+      toDate1.getMonth() === toDate2.getMonth()
       &&
-      toDate1.getDate() === date2.getDate()
+      toDate1.getDate() === toDate2.getDate()
     ) return true
     return false
 }
 
 export const usersToListItem = (users) => {
     return users.map(user => user.username)
+}
+
+// serverDate = 31-12-2002
+export const serverToClientDate = (serverDate) => {
+    const splitted = serverDate.split("-")
+    return new Date(splitted[2], Number(splitted[1]) - 1, splitted[0])
+}
+
+export const clientToServeDate = (clientDate) => {
+  const toDate = new Date(clientDate)
+  let month = toDate.getMonth()+1
+  if ( month < 10 ) month = '0' + month
+  return toDate.getDate()  + "-" + month + "-" + toDate.getFullYear()
 }
