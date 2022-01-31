@@ -42,6 +42,14 @@ export function getUserData() {
         .catch((error) => { throw error })
 }
 
+export function getTeamRoasters() {
+    const url = createRoute('ROASTER', 'TEAM')
+    const requestOptions = createOptions(METHODS.GET)
+    return fetch(url, requestOptions)
+        .then(res => res.json())
+        .catch((error) => { throw error })
+}
+
 export function getUserRoasters() {
     const url = createRoute('ROASTER', 'READ')
     const requestOptions = createOptions(METHODS.GET)

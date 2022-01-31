@@ -82,12 +82,13 @@ export const ADMIN_RADIO_BUTTONS = [
 export const apiUrl =  'http://localhost:3000/';
 
 export const CRUD = {
+    ALL: 'all',
+    READ: 'read',
+    USER: 'user',
+    TEAM: 'team',
     CREATE: 'create',
     DELETE: 'delete',
     UPDATE: 'update',
-    READ: 'read',
-    ALL: 'all',
-    USER: 'user',
     UPDATE_OR_REMOVE: 'updateOrRemove',
 }
 

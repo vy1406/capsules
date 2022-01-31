@@ -16,7 +16,8 @@ import {
   GET_USER_ROASTERS,
   AUTHENTICATE,
   SET_USER_ROASTERS,
-  ADD_DATES
+  ADD_DATES,
+  SET_TEAM_ROASTERS
 } from "./types";
 
 export const setLoggedUser = (user) => ({
@@ -62,6 +63,11 @@ export const setModalType = (modalType) => ({
 export const setModalData = (modalData) => ({
   type: SET_MODAL_DATA,
   payload: modalData
+})
+
+export const setTeamRoasters = (teamRoasters) => ({
+  type: SET_TEAM_ROASTERS,
+  payload: teamRoasters
 })
 
 export const setUserRoasters = (roasters) => ({

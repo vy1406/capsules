@@ -1,5 +1,5 @@
 import { put, call, takeEvery, select } from 'redux-saga/effects';
-import { setUserData, setUsers, setTeams, setUserRoasters } from "./actions";
+import { setUserData, setUsers, setTeams, setUserRoasters, setTeamRoasters } from "./actions";
 import { setIsLoading, setIsError, setLoggedUser } from './actions';
 import { DUMMY_USER_DATA } from '../utils/constants';
 import { setLocalStorageItem } from '../services/localStorage';
@@ -8,6 +8,7 @@ import {
   getTeams,
   getUsers,
   getUserRoasters,
+  getTeamRoasters,
   postUser,
   postTeam,
   postRoasters
@@ -72,10 +73,10 @@ function* addUser(action) {
 function* fetchUserData() {
   yield put(setIsLoading(true))
   try {
-    const roasters = yield call(getUserRoasters);
-    console.log("sga")
-    console.log(roasters)
-    yield put(setUserRoasters(roasters))
+    const userRoasters = yield call(getUserRoasters);
+    const teamRoasters = yield call(getTeamRoasters);
+    yield put(setUserRoasters(userRoasters))
+    yield put(setTeamRoasters(teamRoasters))
   }
   catch {
     yield put(setIsError(true))

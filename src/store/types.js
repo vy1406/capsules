@@ -7,6 +7,9 @@ export const SET_MODAL_DATA = 'SET_MODAL_DATA';
 export const GET_USER_DATA = 'GET_USER_DATA';
 export const SET_USER_DATA = 'SET_USER_DATA';
 
+export const SET_TEAM_ROASTERS = 'SET_TEAM_ROASTERS';
+export const GET_TEAM_ROASTERS = 'GET_TEAM_ROASTERS';
+
 export const SET_USER_ROASTERS = 'SET_USER_ROASTERS';
 export const GET_USER_ROASTERS = 'GET_USER_ROASTERS';
 

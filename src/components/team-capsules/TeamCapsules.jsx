@@ -4,39 +4,40 @@ import './style.scss'
 import Day from '../day/Day';
 import { connect } from 'react-redux';
 import DayNavigation from '../day-navigation/DayNavigation';
-import { addDaysToDate, getLastSunday, isEmpty, isSameDate, usersToListItem } from '../../utils/utils';
+import { addDaysToDate, getLastSunday, isEmpty, isSameDate, usersToListItem, clientToServeDate } from '../../utils/utils';
 
 import { WEEK_NAMES, EMPTY_ROASTER, WEEK } from '../../utils/constants';
 
-const TeamCapsules = ( { userData }) => {
+const TeamCapsules = ( { teamRoasters }) => {
     const now = new Date()
     const [closestSunday, setClosestSunday] = useState(getLastSunday(now))
     const [endDate, setEndDate] = useState(addDaysToDate(now, 5))
     const [weekRoaster, setWeekRoaster] = useState([])
-    const [dropDownUsers, setDropDownUsers] = useState(userData.teamUsers)
-    const [dropDownDefault, setDropDownDefault] = useState(usersToListItem(userData.teamUsers))
+    const [dropDownUsers, setDropDownUsers] = useState(teamRoasters)
+    const [dropDownDefault, setDropDownDefault] = useState(usersToListItem(teamRoasters))
+    
+    useEffect(() => {
+        buildWeek(closestSunday)
+    }, [teamRoasters])
+
     const findByDate = (dateToSearchBy) => {
-        const found = userData.roasters.find(( roaster => 
-            isSameDate(roaster.date,dateToSearchBy)
-        ))
+        const found = teamRoasters.find(( roaster => roaster.date === clientToServeDate(dateToSearchBy)))
         return found
     }
 
     const buildWeek = (startDate) => {
-        if ( isEmpty(userData.roasters) ) return []
+        if ( isEmpty(teamRoasters) ) return []
         const weekRoaster = []
         WEEK.map((week, index) => {
             const found = findByDate(addDaysToDate(startDate, index))
             if ( found ) weekRoaster.push(found)
-            else weekRoaster.push(EMPTY_ROASTER)
+            else {
+                const dateToAdd = clientToServeDate(addDaysToDate(startDate, index))
+                weekRoaster.push({ date: dateToAdd, users: []})
+            }
         })
         setWeekRoaster(weekRoaster)
     }
-
-    useEffect(() => {
-        buildWeek(closestSunday)
-    }, [])
-
 
     const handleOnSetEndDate = (newStartDate, newEndDate) => {
         setClosestSunday(newStartDate)
@@ -48,7 +49,7 @@ const TeamCapsules = ( { userData }) => {
         setDropDownDefault(arrNames)
         const foundUsers = []
         arrNames.map(name => {
-            const found = userData.teamUsers.find(user => user.username === name)
+            const found = teamRoasters.find(user => user.username === name)
             foundUsers.push(found)
         })
         setDropDownUsers(foundUsers)
@@ -67,7 +68,7 @@ const TeamCapsules = ( { userData }) => {
         <div className="userCapsulesWrap">
             <DayNavigation setStartEndDate={handleOnSetEndDate} />
             <MultipleSelectCheckmarks
-                items={usersToListItem(userData.teamUsers)}
+                items={usersToListItem(teamRoasters)}
                 onCloseDropDown={handleOnCloseDropDown}
             />
             {weekRoaster.map((roaster, dayIndex) => (
@@ -87,7 +88,7 @@ const mapDispatchToProps = {
   };
   
   const mapStateToProps = state => ({
-    userData: state.globalReducer.userData,
+    teamRoasters: state.globalReducer.teamRoasters,
     // modalType: state.globalReducer.modalType,
     // isModalOpen: state.globalReducer.isModalOpen,
     // modalData: state.globalReducer.modalData

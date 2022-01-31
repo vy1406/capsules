@@ -3,7 +3,7 @@ import './style.scss'
 import Day from '../day/Day';
 import { connect } from 'react-redux';
 import DayNavigation from '../day-navigation/DayNavigation';
-import { addDaysToDate, getLastSunday, isEmpty, isSameDate, clientToServeDate, serverToClientDate } from '../../utils/utils';
+import { addDaysToDate, getLastSunday, isEmpty, clientToServeDate } from '../../utils/utils';
 import { WEEK_NAMES, EMPTY_ROASTER, WEEK } from '../../utils/constants';
 
 

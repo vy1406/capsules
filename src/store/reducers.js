@@ -8,6 +8,7 @@ import {
   SET_LOGGED_USER,
   SET_TEAMS,
   SET_USERS,
+  SET_TEAM_ROASTERS,
   SET_USER_ROASTERS
 } from "./types";
 
@@ -20,7 +21,8 @@ const initialState = {
   loggedUser: null,
   users: [],
   teams: [],
-  userRoasters: []
+  userRoasters: [],
+  teamRoasters: []
 };
 
 export const globalReducer = (state = initialState, action) => {
@@ -70,6 +72,14 @@ export const globalReducer = (state = initialState, action) => {
         ...{ userRoasters: action.payload}
       }
     }
+
+    case SET_TEAM_ROASTERS: {
+      return {
+        ...state,
+        ...{ teamRoasters: action.payload}
+      }
+    }
+
 
     case SET_USERS: {
       return {
