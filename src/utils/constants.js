@@ -1,8 +1,8 @@
-import { getRandomColor, addDaysToDate } from "./utils";
+import { getRandomColor, addDaysToDate, clientToServeDate } from "./utils";
 
 export const WEEK_NAMES = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי']
 export const WEEK = [0,1,2,3,4];
-export const EMPTY_ROASTER = { date:new Date(), users: []}
+export const EMPTY_ROASTER = { date: clientToServeDate(new Date()), users: []}
 
 // for dev:
 
@@ -87,6 +87,7 @@ export const CRUD = {
     UPDATE: 'update',
     READ: 'read',
     ALL: 'all',
+    USER: 'user',
     UPDATE_OR_REMOVE: 'updateOrRemove',
 }
 

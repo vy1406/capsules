@@ -3,37 +3,40 @@ import './style.scss'
 import Day from '../day/Day';
 import { connect } from 'react-redux';
 import DayNavigation from '../day-navigation/DayNavigation';
-import { addDaysToDate, getLastSunday, isEmpty, isSameDate } from '../../utils/utils';
+import { addDaysToDate, getLastSunday, isEmpty, isSameDate, clientToServeDate, serverToClientDate } from '../../utils/utils';
 import { WEEK_NAMES, EMPTY_ROASTER, WEEK } from '../../utils/constants';
 
-const UserCapsules = ({ userData }) => {
+
+const UserCapsules = ({ userRoasters, loggedUser }) => {
     const now = new Date()
     const [closestSunday, setClosestSunday] = useState(getLastSunday(now))
     const [endDate, setEndDate] = useState(addDaysToDate(now, 5))
     const [weekRoaster, setWeekRoaster] = useState([])
 
+    useEffect(() => {
+        buildWeek(closestSunday)
+    }, [userRoasters])
+
     const findByDate = (dateToSearchBy) => {
-        const found = userData.roasters.find(( roaster => 
-            isSameDate(roaster.date,dateToSearchBy)
-        ))
+        const found = userRoasters.find(( roaster => roaster.date === clientToServeDate(dateToSearchBy)))
         return found
     }
 
     const buildWeek = (startDate) => {
-        if ( isEmpty(userData.roasters) ) return []
+        if ( isEmpty(userRoasters) ) return []
         const weekRoaster = []
         WEEK.map((week, index) => {
             const found = findByDate(addDaysToDate(startDate, index))
-            if ( found ) weekRoaster.push(found)
-            else weekRoaster.push(EMPTY_ROASTER)
+            if ( found ) {
+                weekRoaster.push(found)
+            }
+            else {
+                const dateToAdd = clientToServeDate(addDaysToDate(startDate, index))
+                weekRoaster.push({ date: dateToAdd, users: []})
+            }
         })
         setWeekRoaster(weekRoaster)
     }
-
-    useEffect(() => {
-        buildWeek(closestSunday)
-    }, [])
-
 
     const handleOnSetEndDate = (newStartDate, newEndDate) => {
         setClosestSunday(newStartDate)
@@ -42,9 +45,8 @@ const UserCapsules = ({ userData }) => {
     }
 
     const getOnlyLoginUser = (roaster) => {
-        const foundUser = roaster.users.find( user => userData.user.id === user.id)
-        if ( foundUser ) return [foundUser]
-        return []
+        const foundUser = roaster.users.find( user => loggedUser.id === user._id)
+        return foundUser ? [foundUser] : []
     }
     
     return (
@@ -64,18 +66,14 @@ const UserCapsules = ({ userData }) => {
     );
 }
 
-const mapDispatchToProps = {
-    // getUserData,
-  };
+const mapDispatchToProps = { };
   
-  const mapStateToProps = state => ({
-    userData: state.globalReducer.userData,
-    // modalType: state.globalReducer.modalType,
-    // isModalOpen: state.globalReducer.isModalOpen,
-    // modalData: state.globalReducer.modalData
-  });
-  
-  export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-  )(UserCapsules);
+const mapStateToProps = state => ({
+    userRoasters: state.globalReducer.userRoasters,
+    loggedUser: state.globalReducer.loggedUser,
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(UserCapsules);

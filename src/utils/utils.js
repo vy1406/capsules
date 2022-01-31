@@ -21,16 +21,16 @@ export const formatDate = (date) => {
 
 // default is week ( 7 days )
 export const addDaysToDate = (date, days = 7) => {
-  var datePlusWeek = new Date(date);
-  datePlusWeek.setDate(datePlusWeek.getDate() + days);
-  return datePlusWeek
+  var datePlusDay = new Date(date);
+  datePlusDay.setDate(datePlusDay.getDate() + days);
+  return datePlusDay
 }
 
 // default is week ( 7 days )
 export const subDaysFromDate = (date, days = 7) => {
-  var datePlusWeek = new Date(date);
-  datePlusWeek.setDate(datePlusWeek.getDate() - days);
-  return datePlusWeek
+  var datePlusDay = new Date(date);
+  datePlusDay.setDate(datePlusDay.getDate() - days);
+  return datePlusDay
 }
 
 export const initStartDates = (LIMIT) => {
@@ -78,6 +78,8 @@ export const serverToClientDate = (serverDate) => {
 export const clientToServeDate = (clientDate) => {
   const toDate = new Date(clientDate)
   let month = toDate.getMonth()+1
+  let day = toDate.getDate()
+  if ( day < 10 ) day = '0' + day
   if ( month < 10 ) month = '0' + month
-  return toDate.getDate()  + "-" + month + "-" + toDate.getFullYear()
+  return day + "-" + month + "-" + toDate.getFullYear()
 }

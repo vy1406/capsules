@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 
 import './style.scss'
-import { formatDate } from '../../utils/utils';
+import { formatDate, clientToServeDate } from '../../utils/utils';
 
 const bull = (
   <Box
@@ -24,7 +24,7 @@ export default function Day({ dayName, users, date}) {
       >
       <CardContent>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          {formatDate(date)} {bull} {dayName}
+          {date} {bull} {dayName}
         </Typography>
         <Typography variant="h5" component="div">
         {users.map((user, index) => (

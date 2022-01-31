@@ -73,6 +73,7 @@ function* fetchUserData() {
   yield put(setIsLoading(true))
   try {
     const roasters = yield call(getUserRoasters);
+    console.log("sga")
     console.log(roasters)
     yield put(setUserRoasters(roasters))
   }
