@@ -86,13 +86,6 @@ const CalendarPage = ({
     
 }
 
-/*
-
- TODO: 
- - pull roasters to calendar by user. ( filter roasters by user_id)
- because it removes but u still showing all the roasters of the whle team... 
- 
-*/
 const mapDispatchToProps = {
     toggleModal,
     setModalData,

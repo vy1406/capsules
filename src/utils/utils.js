@@ -4,6 +4,7 @@ export const getRandomColor = () => {
   for (var i = 0; i < 6; i++) {
     color += letters[Math.floor(Math.random() * 16)];
   }
+  
   return color;
 }
 
@@ -66,7 +67,7 @@ export const isSameDate = (date1, date2) => {
 }
 
 export const usersToListItem = (users) => {
-    return users.map(user => user.username)
+    return users.map(user => ({ key: user.id, value: user.username}))
 }
 
 // serverDate = 31-12-2002

@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import Login from './components/login/Login';
 import Container from './components/container/Container';
 import ModalContainer from './components/modals/ModalContainer/ModalContainer';
+import Loader from './components/modals/Loader/Loader';
+import ErrorModal from './components/modals/ErrorModal/ErrorModal';
 
 const App = ({loggedUser}) => {
 
@@ -10,6 +12,8 @@ const App = ({loggedUser}) => {
     <div>
       {console.log(loggedUser)}
       {loggedUser ? <Container /> : <Login />}
+      <Loader />
+      <ErrorModal />
       <ModalContainer />
     </div>
   );
@@ -21,7 +25,7 @@ const mapDispatchToProps = {
   
 const mapStateToProps = state => ({
   loggedUser: state.globalReducer.loggedUser,
-
+  isLoading: state.globalReducer.isLoading
 });
 
 export default connect(

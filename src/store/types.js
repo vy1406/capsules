@@ -6,15 +6,19 @@ export const SET_MODAL_DATA = 'SET_MODAL_DATA';
 
 export const GET_USER_DATA = 'GET_USER_DATA';
 export const SET_USER_DATA = 'SET_USER_DATA';
+export const SET_USER_COLOR = 'SET_USER_COLOR';
 
 export const SET_TEAM_ROASTERS = 'SET_TEAM_ROASTERS';
 export const GET_TEAM_ROASTERS = 'GET_TEAM_ROASTERS';
+
+export const SET_USER_TEAMMATES = 'SET_USER_TEAMMATES';
 
 export const SET_USER_ROASTERS = 'SET_USER_ROASTERS';
 export const GET_USER_ROASTERS = 'GET_USER_ROASTERS';
 
 export const AUTHENTICATE = 'AUTHENTICATE';
 export const SET_LOGGED_USER = 'SET_LOGGED_USER';
+export const UPDATE_USER = 'UPDATE_USER'
 
 export const ADD_NEW_USER = 'ADD_NEW_USER';
 export const ADD_NEW_TEAM = 'ADD_NEW_TEAM';

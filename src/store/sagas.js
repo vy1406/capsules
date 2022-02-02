@@ -1,7 +1,7 @@
 import { put, call, takeEvery, select } from 'redux-saga/effects';
-import { setUserData, setUsers, setTeams, setUserRoasters, setTeamRoasters } from "./actions";
+
 import { setIsLoading, setIsError, setLoggedUser } from './actions';
-import { DUMMY_USER_DATA } from '../utils/constants';
+import { DUMMY_USER_DATA } from '../utils/constants';6
 import { setLocalStorageItem } from '../services/localStorage';
 import {
   postLogin,
@@ -11,8 +11,17 @@ import {
   getTeamRoasters,
   postUser,
   postTeam,
-  postRoasters
+  postRoasters,
+  getUserTeammates,
+  updateDBUser
 } from '../services/apiService';
+import {
+  setUsers,
+  setTeams,
+  setUserRoasters,
+  setTeamRoasters,
+  setUserTeammates
+} from "./actions";
 import {
   GET_USER_DATA,
   AUTHENTICATE,
@@ -21,12 +30,13 @@ import {
   GET_USERS,
   GET_TEAMS,
   ADD_DATES,
-  SET_USER_DATA
+  SET_USER_DATA,
+  UPDATE_USER
 } from "./types";
 
 const countriesEndpoint = 'https://restcountries.com/v3.1/all'
 
-export const getUser = (state) => state.globalReducer.userData.user
+export const getUser = (state) => state.globalReducer.loggedUser
 
 function* authenticateUser(action) {
   yield put(setIsLoading(true))
@@ -58,6 +68,20 @@ function* addTeam(action) {
   }
 }
 
+function* updateUser(action) {
+  try {
+    let user = yield select(getUser)
+    yield call(updateDBUser, user);
+  }
+  catch (e){
+    console.log(e)
+    yield put(setIsError(true))
+  }
+  finally {
+    yield put(setIsLoading(false))
+  }
+}
+
 function* addUser(action) {
   try {
     const res = yield call(postUser, action.payload);
@@ -74,9 +98,16 @@ function* fetchUserData() {
   yield put(setIsLoading(true))
   try {
     const userRoasters = yield call(getUserRoasters);
-    const teamRoasters = yield call(getTeamRoasters);
+    console.log("userRoasters", userRoasters)
     yield put(setUserRoasters(userRoasters))
+    const teamRoasters = yield call(getTeamRoasters);
+    console.log("teamRoasters", teamRoasters)
     yield put(setTeamRoasters(teamRoasters))
+
+    const userTeammates = yield call(getUserTeammates);
+    console.log("userTeammates", userTeammates)
+    yield put(setUserTeammates(userTeammates))
+
   }
   catch {
     yield put(setIsError(true))
@@ -139,10 +170,8 @@ function* userSaga() {
   yield takeEvery(GET_TEAMS, fetchTeams);
   yield takeEvery(GET_USERS, fetchUsers);
   yield takeEvery(ADD_DATES, addDates);
+  yield takeEvery(UPDATE_USER, updateUser);
   
-  
-  
-  // yield takeEvery('ADD_USER_REQUESTED', addUser);
 }
 
 export default userSaga;

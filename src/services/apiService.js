@@ -73,11 +73,17 @@ export function getTeams() {
         .then(res => res.json())
         .catch((error) => { throw error })
 }
+export function updateDBUser(updatedUser) {
+    const url = createRoute('USER', 'UPDATE')
+    const requestOptions = createOptions(METHODS.POST, updatedUser)
+    return fetch(url, requestOptions)
+        .then(res => res.json())
+        .catch((error) => { throw error })
+}
 
 export function postUser(user) {
     const url = createRoute('USER', 'CREATE')
     const requestOptions = createOptions(METHODS.POST, user)
-
     return fetch(url, requestOptions)
         .then(res => res.json())
         .catch((error) => { throw error })
@@ -100,3 +106,13 @@ export function postRoasters(dates) {
         .then(res => res.json())
         .catch((error) => { throw error })
 }
+
+export function getUserTeammates() {
+    const url = createRoute('USER', 'TEAMMATES')
+    const requestOptions = createOptions(METHODS.POST)
+    return fetch(url, requestOptions)
+        .then(res => res.json())
+        .catch((error) => { throw error })
+}
+
+

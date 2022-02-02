@@ -1,23 +1,27 @@
 import {
-  SET_IS_ERROR,
-  SET_IS_LOADING,
-  SET_IS_MODAL_OPEN,
-  SET_MODAL_DATA,
-  SET_MODAL_TYPE,
-  SET_USER_DATA,
-  GET_USER_DATA,
   GET_TEAMS,
   GET_USERS,
   SET_TEAMS,
   SET_USERS,
-  SET_LOGGED_USER,
+  ADD_DATES,
+  UPDATE_USER,
+  SET_IS_ERROR,
   ADD_NEW_USER,
   ADD_NEW_TEAM,
-  GET_USER_ROASTERS,
   AUTHENTICATE,
+  SET_USER_COLOR,
+  SET_USER_DATA,
+  GET_USER_DATA,
+  SET_IS_LOADING,
+  SET_MODAL_DATA,
+  SET_MODAL_TYPE,
+  SET_LOGGED_USER,
+  SET_IS_MODAL_OPEN,
+  GET_USER_ROASTERS,
   SET_USER_ROASTERS,
-  ADD_DATES,
-  SET_TEAM_ROASTERS
+  SET_TEAM_ROASTERS,
+  SET_USER_TEAMMATES,
+  TOGGLE_ERROR_MODAL
 } from "./types";
 
 export const setLoggedUser = (user) => ({
@@ -55,6 +59,11 @@ export const toggleModal = (isModalOpen) => ({
   payload: isModalOpen
 })
 
+export const setUserColor = (color) => ({
+  type: SET_USER_COLOR,
+  payload: color
+})
+
 export const setModalType = (modalType) => ({
   type: SET_MODAL_TYPE,
   payload: modalType
@@ -65,6 +74,11 @@ export const setModalData = (modalData) => ({
   payload: modalData
 })
 
+export const setUserTeammates = (userTeammates) => ({
+  type: SET_USER_TEAMMATES,
+  payload: userTeammates
+})
+
 export const setTeamRoasters = (teamRoasters) => ({
   type: SET_TEAM_ROASTERS,
   payload: teamRoasters
@@ -73,12 +87,6 @@ export const setTeamRoasters = (teamRoasters) => ({
 export const setUserRoasters = (roasters) => ({
   type: SET_USER_ROASTERS,
   payload: roasters
-})
-
-// todo: no need
-export const setUserData = (userData) => ({
-  type: SET_USER_DATA,
-  payload: userData
 })
 
 export const setUsers = (users) => ({
@@ -96,7 +104,7 @@ export const addDates = (dates) => ({
   payload: dates
 })
 
-
+export const updateUser = () => ({ type: UPDATE_USER })
 
 export const getTeams = () => ({ type: GET_TEAMS })
 

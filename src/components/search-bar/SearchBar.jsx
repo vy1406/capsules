@@ -26,9 +26,7 @@ export default function MultipleSelectCheckmarks({
   onCloseDropDown,
 }) {
 
-
   const [itemNames, setItemNames] = useState(items);
-
 
   const handleChange = (event) => {
     const {

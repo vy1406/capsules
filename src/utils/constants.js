@@ -89,6 +89,7 @@ export const CRUD = {
     CREATE: 'create',
     DELETE: 'delete',
     UPDATE: 'update',
+    TEAMMATES: 'teammates',
     UPDATE_OR_REMOVE: 'updateOrRemove',
 }
 

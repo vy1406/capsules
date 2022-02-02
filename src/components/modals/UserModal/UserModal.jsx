@@ -3,22 +3,26 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { getRandomColor } from '../../../utils/utils';
-import { DialogTitle, DialogContent } from '@mui/material';
+import { DialogTitle, DialogContent, TextField } from '@mui/material';
 import './style.scss'
 
 const UserModal = ({
-    modalData
+    modalData,
+    userColor,
+    setUserColor
 }) => {
-    const [color, setColor] = useState("aqua")
+    const [color, setColor] = useState(userColor)
 
     const handleOnGenerateNewColor = () => {
-        setColor(getRandomColor())
-    }
-
-    const handleOnSave = () => {
-        console.log(color)
+        const randomColor = getRandomColor()
+        setColor(randomColor)
+        setUserColor(randomColor)
     }
     
+    const handleOnChange = (value) => {
+        setColor(value)
+        setUserColor(value)
+    }
     
     return (
         <Fragment>
@@ -28,6 +32,14 @@ const UserModal = ({
             <DialogContent>
                 <Box className="generateColorWrap">
                     <div className="generatedColor" style={{ backgroundColor: color}}></div>
+                    <TextField
+                            id="standard-basic"
+                            label="Color"
+                            className="colorInput"
+                            value={color}
+                            variant="standard"
+                            onChange={(e) => handleOnChange(e.target.value)}
+                        />
                     <Button
                         variant="contained"
                         onClick={handleOnGenerateNewColor}>

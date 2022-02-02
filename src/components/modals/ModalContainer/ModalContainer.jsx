@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
-import { toggleModal, setModalType, setModalData } from '../../../store/actions';
+import { toggleModal, setModalType, setModalData, setUserColor } from '../../../store/actions';
 import './style.scss'
 import UserModal from '../UserModal/UserModal';
 import { MODAL_TYPES } from '../constants';
@@ -15,7 +15,9 @@ const ModalContainer = ({
     isModalOpen,
     setModalData,
     modalData,
-    modalType
+    modalType,
+    loggedUser,
+    setUserColor,
 }) => {
 
     const handleOnConfirm = () => {
@@ -32,18 +34,22 @@ const ModalContainer = ({
         modalData.onCancelCallback && modalData.onCancelCallback()
     }
 
+    
     const openModalByType = () => {
         switch (modalType) {
             case MODAL_TYPES.USER_MODAL: 
-                return <UserModal modalData={modalData}/>
+                return <UserModal
+                          modalData={modalData}
+                          userColor={loggedUser.color}
+                          setUserColor={setUserColor}
+                          />
             case MODAL_TYPES.INFO_MODAL: 
-                return <InfoModal modalData={modalData}/>
+                return <InfoModal modalData={modalData} />
             default: 
                 return null;
         }
     }
   
-    
     return (
         isModalOpen &&
         <div>
@@ -68,13 +74,16 @@ const ModalContainer = ({
 const mapDispatchToProps = {
     toggleModal,
     setModalType,
-    setModalData
+    setModalData,
+    setUserColor
 };
 
 const mapStateToProps = state => ({
+    loggedUser: state.globalReducer.loggedUser,
     modalType: state.globalReducer.modalType,
     isModalOpen: state.globalReducer.isModalOpen,
-    modalData: state.globalReducer.modalData
+    modalData: state.globalReducer.modalData,
+    isError: state.globalReducer.isError
 });
 
 export default connect(

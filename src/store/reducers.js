@@ -8,8 +8,11 @@ import {
   SET_LOGGED_USER,
   SET_TEAMS,
   SET_USERS,
+  SET_USER_COLOR,
   SET_TEAM_ROASTERS,
-  SET_USER_ROASTERS
+  SET_USER_ROASTERS,
+  SET_USER_TEAMMATES,
+  TOGGLE_ERROR_MODAL
 } from "./types";
 
 const initialState = {
@@ -22,7 +25,8 @@ const initialState = {
   users: [],
   teams: [],
   userRoasters: [],
-  teamRoasters: []
+  teamRoasters: [],
+  userTeammates: [],
 };
 
 export const globalReducer = (state = initialState, action) => {
@@ -66,6 +70,15 @@ export const globalReducer = (state = initialState, action) => {
       }
     }
 
+    case SET_USER_COLOR: {
+      return {
+        ...state, 
+        ...{ loggedUser: {
+          ...state.loggedUser,
+          color: action.payload
+        }}
+      }
+    }
     case SET_USER_ROASTERS: {
       return {
         ...state,
@@ -80,6 +93,12 @@ export const globalReducer = (state = initialState, action) => {
       }
     }
 
+    case SET_USER_TEAMMATES: {
+      return {
+        ...state,
+        ...{ userTeammates: action.payload}
+      }
+    }
 
     case SET_USERS: {
       return {
